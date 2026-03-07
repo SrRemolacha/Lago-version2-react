@@ -1,0 +1,186 @@
+/* =================================
+   FONDO LOGIN (AUTO LIGHT / DARK)
+================================= */
+.login-bg {
+  background: var(--auth-bg-light);
+}
+
+@media (prefers-color-scheme: dark) {
+  .login-bg {
+    background:
+      radial-gradient(
+        circle at top,
+        rgba(255, 215, 0, 0.06),
+        transparent 45%
+      ),
+      radial-gradient(
+        circle at center,
+        rgba(255, 255, 255, 0.04),
+        transparent 55%
+      ),
+      linear-gradient(
+        180deg,
+        #182a34 0%,
+        #0f1b22 55%,
+        #0a141a 100%
+      );
+  }
+}
+
+.login-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("https://img.freepik.com/foto-gratis/textura-suelo-piedra_1194-9047.jpg?semt=ais_hybrid&w=740&q=80");
+  opacity: 0.05;
+  pointer-events: none;
+}
+
+
+/* =================================
+   CARD
+================================= */
+.login-card {
+  background-color: var(--auth-card-bg-light);
+  border: 1px solid var(--auth-border-light);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+  .login-card {
+    box-shadow:
+      0 20px 40px rgba(0, 0, 0, 0.5),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+  }
+}
+
+/* =================================
+   ANIMACIÓN
+================================= */
+.login-animate {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.6s ease-out forwards;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =================================
+   LOGO Y TEXTOS
+================================= */
+.login-logo {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--text-main);
+}
+
+.login-logo span {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 3px;
+  color: var(--brand-blue);
+}
+
+.login-subtitle {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.login-accent {
+  width: 40px;
+  height: 3px;
+  margin: 0.75rem auto;
+  border-radius: 2px;
+  background-color: var(--accent-gold);
+}
+
+/* =================================
+   INPUTS
+================================= */
+.field-group {
+  position: relative;
+}
+
+.field-group input {
+  padding: 14px 12px;
+}
+
+.field-group label {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  pointer-events: none;
+  transition: all 0.2s ease;
+}
+
+.field-group input:focus + label,
+.field-group input:not(:placeholder-shown) + label {
+  top: -6px;
+  font-size: 0.7rem;
+  padding: 0 4px;
+  color: var(--accent-gold);
+  background-color: var(--auth-card-bg-light);
+}
+
+@media (prefers-color-scheme: dark) {
+  .field-group input {
+    background-color: var(--auth-input-bg-dark);
+    color: var(--text-main);
+    border: 1px solid var(--brand-blue);
+  }
+
+  .field-group label {
+    background-color: var(--auth-card-bg-dark);
+  }
+}
+
+/* =================================
+   BOTÓN LOGIN
+================================= */
+.btn-login {
+  background: linear-gradient(135deg, #182a34, #223846);
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-weight: 500;
+  color: #ffffff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-login:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* =================================
+   TOAST
+================================= */
+.toast-clinic {
+  background-color: var(--bg-header);
+  color: #ffffff;
+  border-left: 4px solid var(--accent-gold);
+}
+
+/* =================================
+   SESIÓN SEGURA
+================================= */
+.secure-session {
+  margin-top: 12px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}

@@ -1,0 +1,272 @@
+/* ===============================
+   HOME – Premium Spa Styles
+   =============================== */
+
+.hero-section {
+  min-height: 90vh;
+  background-image: url('https://ppmwqapanrsxnfpfuqol.supabase.co/storage/v1/object/public/assets/fondos/fondo-hero.png');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+/* Cuando el sistema está en modo claro */
+@media (prefers-color-scheme: light) {
+  .hero-section {
+    background-image: url("https://img.freepik.com/foto-gratis/textura-suelo-piedra_1194-9047.jpg?semt=ais_hybrid&w=740&q=80");
+  }
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+    linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.15),
+      rgba(245, 246, 244, 0.65)
+    );
+}
+
+
+@media (prefers-color-scheme: dark) {
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(15, 27, 34, 0.65),
+        rgba(15, 27, 34, 0.85)
+    );
+    }
+}
+
+.hero-logo {
+  font-size: 4rem;
+  letter-spacing: 0.35rem;
+  font-weight: 500;
+  color: var(--text-light);
+}
+
+.hero-brand {
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+  font-size: 0.9rem;
+  color: var(--accent-gold);
+}
+
+.hero-title {
+  font-size: 2.2rem;
+  font-weight: 300;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.hero-subtitle {
+  font-size: 1rem;
+  max-width: 640px;
+  margin: 0 auto;
+  color: var(--text-muted);
+}
+
+@media (prefers-color-scheme: light) {
+.hero-logo {
+  font-size: 4rem;
+  letter-spacing: 0.35rem;
+  font-weight: 500;
+  color: var(--brand-blue);
+}
+}
+
+@media (prefers-color-scheme: light) {
+  .hero-brand {
+    text-transform: uppercase;
+    letter-spacing: 0.2rem;
+    font-size: 0.9rem;
+    color: var(--text-main);
+  }
+}
+
+/* cards con redireccion a las paginas especificas */
+.main-card {
+  position: relative;
+  height: 260px;
+  border-radius: 20px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  text-decoration: none;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.main-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+}
+
+.main-card {
+  position: relative;
+  height: 260px;
+  border-radius: 18px;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  text-decoration: none;
+
+  transition:
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes fadeUpSoft {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.main-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
+}
+
+.main-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at top,
+      rgba(255, 255, 255, 0.12),
+      rgba(0, 0, 0, 0.45)
+    );
+  opacity: 0.8;
+  transition: opacity 0.6s ease;
+}
+
+.main-card:hover::before {
+  opacity: 0.6;
+}
+
+.main-card-overlay {
+  position: relative;
+  width: 100%;
+  padding: 1.75rem;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.55),
+    rgba(0, 0, 0, 0.05)
+  );
+  color: white;
+}
+
+.main-card h3 {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Fondos */
+.main-card.facial {
+  background-image: url('https://ppmwqapanrsxnfpfuqol.supabase.co/storage/v1/object/public/assets/fondos/corporalPrincipal.avif');
+}
+
+.main-card.corporal {
+  background-image: url('https://ppmwqapanrsxnfpfuqol.supabase.co/storage/v1/object/public/assets/fondos/corporalPrincipal.avif');
+}
+
+.main-card.salud {
+  background-image: url('https://ppmwqapanrsxnfpfuqol.supabase.co/storage/v1/object/public/assets/fondos/saludPrincipal.jpg');
+}
+
+.main-card.spa {
+  background-image: url('https://ppmwqapanrsxnfpfuqol.supabase.co/storage/v1/object/public/assets/fondos/sauna.jpg');
+}
+
+.main-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(15, 27, 34, 0.85),
+    rgba(15, 27, 34, 0.2)
+  );
+}
+
+.main-title {
+  position: relative;
+  padding: 1.5rem;
+  font-size: 1.4rem;
+  font-weight: 300;
+  color: var(--text-light);
+}
+
+/* SECTIONS */
+
+.section-title {
+  font-size: 1.8rem;
+  font-weight: 300;
+}
+
+.section-subtitle {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.schedule-section { background-color: color-mix(in srgb, var(--bg-header) 90%, transparent); }
+
+@media (prefers-color-scheme: light) {
+.schedule-section {
+    background:
+        linear-gradient(
+        to bottom,
+        rgba(245, 246, 244, 0.9),
+        rgba(232, 234, 230, 0.9)
+        );
+    padding: 5rem 0;
+    }
+}
+
+.schedule-card {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 2.5rem 3rem;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(6px);
+  border-radius: 20px;
+  border: 1px solid var(--border-soft);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.schedule-card h3 {
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 1.2rem;
+}
+
+.schedule-card p {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+}
+
+
+@media (min-width: 992px) {
+  .main-card {
+    height: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-card {
+    height: 220px;
+  }
+}
+
+

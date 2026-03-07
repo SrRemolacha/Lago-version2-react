@@ -1,26 +1,178 @@
-@import "tailwindcss";
+/* =====================================================
+   GLOBAL DESIGN SYSTEM – LAGO SPA
+   ===================================================== */
+
+/* ===============================
+   THEME VARIABLES
+   =============================== */
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-main: #f4f2ee;  
+  --bg-header: rgba(245, 246, 244, 0.85);
+  --bg-footer: #f8f9fa;
+
+  --text-main: #212529;
+  --text-muted: #6c757d;
+  --text-light: #ebe1d7;
+
+  --accent-gold: #FFD700;
+  --brand-blue: #31546a;
+  --border-soft: #b9b9b9;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* ===============================
+   DARK MODE
+   =============================== */
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --bg-main: #0f1a20;
+    --bg-header: rgba(15, 27, 34, 0.95);
+    --bg-footer: #141e25;
+
+    --text-main: #f3efe8;
+    --text-muted: #b7b2a9;
+    --text-light: #f5f1ea;
+
+    --brand-blue: #9bb7c9;
+    --border-soft: rgba(255, 255, 255, 0.07);
+    --accent-gold: #d6b25e;
+  }
+
+  .logo-header {
+    content: url("https://ppmwqapanrsxnfpfuqol.supabase.co/storage/v1/object/public/assets/logos/encabezado-dark.png");
   }
 }
 
+/* ===============================
+   GLOBAL RESET
+   =============================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+}
+
+/* ===============================
+   GLOBAL UTILITIES
+   =============================== */
+
+.logo-header {
+  height: 40px;
+}
+
+/* Gold underline */
+.hover-gold-underline {
+  position: relative;
+  display: inline-block;   /* clave */
+  text-decoration: none;
+  color: inherit;
+}
+
+.hover-gold-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 2px;
+  background-color: var(--accent-gold);
+  transition: width 0.3s ease;
+  pointer-events: none;   /* crítico */
+}
+
+.hover-gold-underline:hover::after {
+  width: 100%;
+}
+
+/* Button gold accent */
+.btn-gold-accent {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-gold-accent::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 3px;
+  background-color: var(--accent-gold);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s ease;
+}
+
+.btn-gold-accent:hover::after {
+  transform: scaleX(1);
+}
+
+/* ===============================
+   GLOBAL ANIMATIONS
+   =============================== */
+
+@keyframes fadeSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes luxuryFade {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(8px);
+  }
+}
+
+/* =========================================
+   GLOBAL ATMOSPHERIC TEXTURE
+   ========================================= */
+
+body {
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+
+  background-image: url("https://ppmwqapanrsxnfpfuqol.supabase.co/storage/v1/object/public/assets/fondos/FondoClaro.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  opacity: 0.035; /* extremadamente sutil */
+}
+
+/* Dark mode texture */
+@media (prefers-color-scheme: dark) {
+  body::before {
+    background-image: url("https://ppmwqapanrsxnfpfuqol.supabase.co/storage/v1/object/public/assets/fondos/fondo-hero.png");
+    opacity: 0.04;
+  }
 }

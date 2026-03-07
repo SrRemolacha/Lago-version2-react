@@ -1,0 +1,141 @@
+/* =====================================================
+   ADMIN THEME – LAGO SPA
+   Sistema de superficies y atmósferas
+   ===================================================== */
+
+/* =====================================================
+   ROOT ADMIN CONTEXT
+   ===================================================== */
+
+   .admin-loading {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--admin-bg, #0f1115);
+}
+
+.admin-root {
+  /* ===============================
+     Superficies base (LIGHT)
+     =============================== */
+
+  /* Fondo general del admin */
+  --admin-bg-main: #f6f4f1;          /* piedra / papel clínico */
+
+  /* Paneles grandes (contenedores) */
+  --admin-bg-panel: #fbfaf8;
+
+  /* Cards y documentos */
+  --admin-bg-card: #ffffff;
+
+  /* ===============================
+     Bordes
+     =============================== */
+
+  --admin-border-soft: rgba(0, 0, 0, 0.08);
+
+  /* ===============================
+     Sombras (LIGHT)
+     =============================== */
+
+  --admin-shadow-panel:
+    0 20px 40px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+
+  --admin-shadow-card:
+    0 10px 25px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+
+  --admin-shadow-hover:
+    0 16px 38px rgba(0, 0, 0, 0.12);
+}
+
+/* =====================================================
+   DARK MODE – Premium Control Atmosphere
+   ===================================================== */
+
+@media (prefers-color-scheme: dark) {
+  .admin-root {
+    /* ===============================
+       Superficies base (DARK)
+       =============================== */
+
+    --admin-bg-main: #0f1b22;         /* fondo profundo */
+    --admin-bg-panel: #121e26;        /* panel de control */
+    --admin-bg-card: #14232c;         /* cards técnicas */
+
+    /* ===============================
+       Bordes
+       =============================== */
+
+    --admin-border-soft: rgba(255, 255, 255, 0.06);
+
+    /* ===============================
+       Sombras (DARK)
+       =============================== */
+
+    --admin-shadow-panel:
+      0 30px 70px rgba(0, 0, 0, 0.65),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+
+    --admin-shadow-card:
+      0 18px 40px rgba(0, 0, 0, 0.6),
+      inset 0 1px 0 rgba(255, 255, 255, 0.03);
+
+    --admin-shadow-hover:
+      0 26px 55px rgba(0, 0, 0, 0.75);
+  }
+}
+
+/* =====================================================
+   UTILIDADES BASE ADMIN
+   (reutilizables en todo el backoffice)
+   ===================================================== */
+
+/* Fondo principal */
+.admin-bg-main {
+  background-color: var(--admin-bg-main);
+}
+
+/* Panel contenedor */
+.admin-panel {
+  background-color: var(--admin-bg-panel);
+  border-radius: 20px;
+  box-shadow: var(--admin-shadow-panel);
+}
+
+/* Card / documento */
+.admin-card-base {
+  background-color: var(--admin-bg-card);
+  border: 1px solid var(--admin-border-soft);
+  border-radius: 16px;
+  box-shadow: var(--admin-shadow-card);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.admin-card-base:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--admin-shadow-hover);
+}
+
+/* =====================================================
+   TEXTO ADMIN (base)
+   ===================================================== */
+
+.admin-text-main {
+  color: var(--text-main);
+}
+
+.admin-text-muted {
+  color: var(--text-muted);
+}
+
+@media (prefers-color-scheme: dark) {
+  .admin-text-main {
+    color: var(--text-light);
+  }
+}
