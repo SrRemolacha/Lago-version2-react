@@ -1,8 +1,15 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState } from 'react';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useCallback,
+} from 'react';
+import { useRouter } from 'next/navigation';
 import { createSupabaseBrowserClient } from '@/lib/supabaseClient';
-
+import type { User, AuthChangeEvent, Session } from '@supabase/supabase-js';
 
 type Profile = {
   id: string;
@@ -16,7 +23,7 @@ type Profile = {
 };
 
 type AuthContextType = {
-  user: any;
+  user: User | null;
   profile: Profile | null;
   loading: boolean;
   signOut: () => Promise<void>;
@@ -25,15 +32,15 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<any>(null);
+  const supabase = createSupabaseBrowserClient();
+  const router = useRouter();
+
+  const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
-  const supabase = createSupabaseBrowserClient()
 
-  useEffect(() => {
-    let mounted = true;
-
-    const loadProfile = async (userId: string) => {
+  const fetchProfile = useCallback(
+    async (userId: string): Promise<Profile | null> => {
       const { data, error } = await supabase
         .from('profiles')
         .select('*')
@@ -41,33 +48,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         .maybeSingle();
 
       if (error) {
-        console.error('[Auth] profile error', error);
+        console.error('[Auth] Error cargando perfil:', error);
         return null;
       }
 
-      if (!data) {
-        console.warn('[Auth] profile not found');
-        return null;
-      }
+      return data as Profile | null;
+    },
+    [supabase]
+  );
 
-      return data as Profile;
-    };
-
+  useEffect(() => {
+    // 1️⃣ Carga inicial — obtener sesión existente
     const initAuth = async () => {
-      // 1️⃣ Obtener sesión inicial
       const {
-        data: { session },
-      } = await supabase.auth.getSession();
+        data: { user: initialUser },
+      } = await supabase.auth.getUser();
 
-      if (!mounted) return;
-
-      const sessionUser = session?.user ?? null;
-      setUser(sessionUser);
-
-      if (sessionUser) {
-        const profileData = await loadProfile(sessionUser.id);
-        if (mounted) setProfile(profileData);
+      if (initialUser) {
+        const profileData = await fetchProfile(initialUser.id);
+        setUser(initialUser);
+        setProfile(profileData);
       } else {
+        setUser(null);
         setProfile(null);
       }
 
@@ -76,37 +78,36 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     initAuth();
 
-    // 2️⃣ Escuchar cambios de auth (login / logout / refresh)
+    // 2️⃣ Listener — reacciona a cambios de sesión en tiempo real
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (_event, session) => {
-      if (!mounted) return;
-
-      setLoading(true);
-
+    } = supabase.auth.onAuthStateChange(async (event: AuthChangeEvent, session: Session | null) => {
       const sessionUser = session?.user ?? null;
-      setUser(sessionUser);
 
-      if (sessionUser) {
-        const profileData = await loadProfile(sessionUser.id);
-        if (mounted) setProfile(profileData);
-      } else {
-        setProfile(null);
+      if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
+        if (sessionUser) {
+          const profileData = await fetchProfile(sessionUser.id);
+          setUser(sessionUser);
+          setProfile(profileData);
+        }
       }
 
-      setLoading(false);
+      if (event === 'SIGNED_OUT') {
+        setUser(null);
+        setProfile(null);
+        router.push('/login');
+      }
     });
 
     return () => {
-      mounted = false;
       subscription.unsubscribe();
     };
-  }, []);
+  }, [supabase, fetchProfile, router]);
 
   const signOut = async () => {
     await supabase.auth.signOut();
-    setUser(null);
-    setProfile(null);
+    // El listener onAuthStateChange captura SIGNED_OUT
+    // y se encarga de limpiar estado + redirigir
   };
 
   return (
@@ -118,8 +119,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
 export function useAuth() {
   const ctx = useContext(AuthContext);
+
   if (!ctx) {
     throw new Error('useAuth debe usarse dentro de AuthProvider');
   }
+
   return ctx;
 }

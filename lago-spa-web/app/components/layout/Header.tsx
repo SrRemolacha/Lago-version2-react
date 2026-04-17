@@ -5,8 +5,7 @@ import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 
 export default function Header() {
-
-  const { user, profile, signOut } = useAuth();
+  const { user, profile, loading, signOut } = useAuth();
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   return (
@@ -22,7 +21,6 @@ export default function Header() {
           />
         </Link>
 
-        {/* Toggle (Bootstrap collapse sigue funcionando) */}
         <button
           className="navbar-toggler"
           type="button"
@@ -35,11 +33,10 @@ export default function Header() {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        {/* Menu */}
         <div className="collapse navbar-collapse" id="mainNavbar">
           <ul className="navbar-nav ms-auto align-items-lg-center gap-lg-4">
 
-            {/* SERVICIOS DROPDOWN CONTROLADO */}
+            {/* SERVICIOS */}
             <li
               className="nav-item position-relative"
               onMouseEnter={() => {
@@ -50,7 +47,7 @@ export default function Header() {
               }}
             >
               <button
-                className="nav-link bg-transparent border-0" //me toco quitar la etiqueta de hover-gold-underline porque el subrayado quedaba debajo del dropdown, actualmente funciona pero puede que haya una mejor solución que si aplique el subrayado dorado
+                className="nav-link bg-transparent border-0"
                 onClick={() => {
                   if (window.innerWidth < 992) {
                     setDropdownOpen(prev => !prev);
@@ -68,21 +65,18 @@ export default function Header() {
                     <small>Experiencias de relajación profunda</small>
                   </Link>
                 </li>
-
                 <li>
                   <Link href="/servicios/facial" className="dropdown-item luxury-item">
                     <span>Facial</span>
                     <small>Tratamientos avanzados para la piel</small>
                   </Link>
                 </li>
-
                 <li>
                   <Link href="/servicios/corporal" className="dropdown-item luxury-item">
                     <span>Corporal</span>
                     <small>Remodelación y bienestar integral</small>
                   </Link>
                 </li>
-
                 <li>
                   <Link href="/servicios/salud" className="dropdown-item luxury-item">
                     <span>Salud</span>
@@ -94,13 +88,13 @@ export default function Header() {
 
             {/* CONTACTO */}
             <li className="nav-item">
-              <Link href="/#contacto" className="nav-link hover-gold-underline">
+              <Link href="/contact" className="nav-link hover-gold-underline">
                 Contacto
               </Link>
             </li>
 
-            {/* ADMIN */}
-            {profile?.role === 'admin' && (
+            {/* ADMIN — solo visible si es admin */}
+            {!loading && profile?.role === 'admin' && (
               <li className="nav-item">
                 <Link
                   href="/admin"
@@ -114,7 +108,7 @@ export default function Header() {
 
             {/* AUTH */}
             <li className="nav-item mt-3 mt-lg-0">
-              {user ? (
+              {loading ? null : user ? (
                 <button
                   onClick={signOut}
                   className="btn btn-sm hover-gold-underline"

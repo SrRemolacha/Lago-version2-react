@@ -1,0 +1,187 @@
+.premiumCard {
+  background-color: var(--bg-header);
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border-soft);
+  padding: 24px;
+  backdrop-filter: blur(8px);
+  margin-top: 20px;
+}
+
+.pageHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+  color: var(--brand-blue);
+  margin-bottom: 24px;
+}
+
+.pageHeader i {
+  font-size: 1.5rem;
+  color: var(--accent-gold);
+}
+
+.tablePremium {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 8px; /* space between rows */
+  margin-top: -8px;
+}
+
+.tablePremium thead th {
+  border-bottom: none;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  font-weight: 600;
+  padding: 12px 16px;
+}
+
+.tablePremium tbody tr {
+  background-color: var(--bg-main);
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+}
+
+.tablePremium tbody tr:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+}
+
+.tablePremium tbody td {
+  padding: 16px;
+  vertical-align: middle;
+  border: none;
+  border-top: 1px solid transparent; /* para evitar cambios de height on hover */
+  border-bottom: 1px solid transparent;
+}
+
+/* Rounded corners for the rows */
+.tablePremium tbody td:first-child {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-left: 1px solid var(--border-soft);
+}
+
+.tablePremium tbody td:last-child {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  border-right: 1px solid var(--border-soft);
+}
+
+.tablePremium tbody td {
+  border-top: 1px solid var(--border-soft);
+  border-bottom: 1px solid var(--border-soft);
+}
+
+
+/* Glass Badges */
+.glassBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.badgeSuccess {
+  background-color: rgba(40, 167, 69, 0.15);
+  color: #1e7e34;
+  border: 1px solid rgba(40, 167, 69, 0.3);
+}
+
+.badgeSecondary {
+  background-color: rgba(108, 117, 125, 0.15);
+  color: #495057;
+  border: 1px solid rgba(108, 117, 125, 0.3);
+}
+
+.badgeDanger {
+  background-color: rgba(220, 53, 69, 0.15);
+  color: #bd2130;
+  border: 1px solid rgba(220, 53, 69, 0.3);
+}
+
+/* Dark mode adjustments for badges */
+@media (prefers-color-scheme: dark) {
+  .badgeSuccess { color: #5ddc77; }
+  .badgeSecondary { color: #adb5bd; }
+  .badgeDanger { color: #f56d79; }
+}
+
+/* Action Icons */
+.actionBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background-color: transparent;
+  color: var(--text-muted);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  margin-right: 6px;
+}
+
+.actionBtn:hover {
+  background-color: var(--bg-main);
+  border-color: var(--border-soft);
+  transform: translateY(-2px);
+}
+
+.actionBtnWarning:hover {
+  color: #e5a400; /* Darker gold/warning */
+  border-color: rgba(229, 164, 0, 0.3);
+  background-color: rgba(229, 164, 0, 0.05);
+}
+
+.actionBtnSuccess:hover {
+  color: #28a745;
+  border-color: rgba(40, 167, 69, 0.3);
+  background-color: rgba(40, 167, 69, 0.05);
+}
+
+.actionBtnDanger:hover {
+  color: #dc3545;
+  border-color: rgba(220, 53, 69, 0.3);
+  background-color: rgba(220, 53, 69, 0.05);
+}
+
+/* Loading & Empty States */
+.statusContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.statusContainer i {
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+  color: var(--accent-gold);
+  opacity: 0.8;
+}
+
+.statusText {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}

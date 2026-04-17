@@ -1,10 +1,13 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useRouter } from 'next/navigation';
 import { createSupabaseBrowserClient } from '@/lib/supabaseClient';
 import { useAuth } from '@/context/AuthContext';
+
+import '@/styles/admin-theme.css';
+import '@/styles/admin-services.css';
 
 const CATEGORY_ICONS: Record<string, string> = {
   Facial: '✨',
@@ -83,16 +86,11 @@ export default function AdminServicesPage() {
   /* ===============================
      Fetch services
      =============================== */
-  useEffect(() => {
-    if (user && profile?.role === 'admin') {
-      fetchServices();
-    }
-  }, [user, profile]);
+  // Después — reemplazar por esto
+const fetchServices = useCallback(async () => {
+  setFetching(true);
 
-  async function fetchServices() {
-    setFetching(true);
-
-    const { data } = await supabase
+  const { data } = await supabase
     .from('services')
     .select(`
       *,
@@ -104,9 +102,23 @@ export default function AdminServicesPage() {
     `)
     .order('created_at', { ascending: false });
 
-    if (data) setServices(data);
-    setFetching(false);
+  if (data) setServices(data as Service[]);
+  setFetching(false);
+}, [supabase]);
+
+useEffect(() => {
+  if (user && profile?.role === 'admin') {
+    supabase
+      .from('services')
+      .select(`*, category:categories (id, name, slug)`)
+      .order('created_at', { ascending: false })
+      .then(({ data }: { data: Service[] | null }) => {
+        if (data) setServices(data);
+        setFetching(false);
+      })
+      .catch(console.error);
   }
+}, [supabase, user, profile]);
 
   /* ===============================
      Actions

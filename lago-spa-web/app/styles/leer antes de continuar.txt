@@ -1,3 +1,0 @@
-el tamaño de las cards de servicios en movil es innecesariamente grande y el modal pensandolo desde esta perspectiva realmente
-no es necesario almenos no el boton de reservar que podria ponerse en la card normal y eliminar el modal o dejar modal solo para 
-descripcion extra

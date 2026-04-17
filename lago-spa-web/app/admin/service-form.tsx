@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { createSupabaseBrowserClient } from "@/lib/supabaseClient";
 
 /* =====================================================
@@ -15,10 +16,25 @@ interface Toast {
   type: ToastType;
 }
 
+interface Category {
+  id: string;
+  name: string;
+}
+
+interface ServiceData {
+  title?: string;
+  description?: string;
+  price?: number;
+  visibility?: "public" | "private";
+  is_active?: boolean;
+  category_id?: string;
+  image_url?: string;
+}
+
 interface Props {
   mode: "create" | "edit";
   serviceId?: string;
-  initialData?: any;
+  initialData?: ServiceData;
 }
 
 /* =====================================================
@@ -34,14 +50,11 @@ export default function ServiceForm({
   /* ================= STATE ================= */
 
   const supabase = createSupabaseBrowserClient();
-
-  const [loading, setLoading] = useState(false);
-
-  const [toast, setToast] = useState<Toast | null>(null);
-
   const router = useRouter();
 
-  const [categories, setCategories] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [toast, setToast] = useState<Toast | null>(null);
+  const [categories, setCategories] = useState<Category[]>([]);
 
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(
@@ -67,21 +80,23 @@ export default function ServiceForm({
 
   /* ================= LOAD DATA ================= */
 
-  useEffect(() => {
-    supabase
-      .from("categories")
-      .select("id, name")
-      .order("name")
-      .then(({ data }) => data && setCategories(data));
-  }, []);
+// Reemplaza el useCallback de fetchCategories y el useEffect por esto:
+useEffect(() => {
+  supabase
+    .from("categories")
+    .select("id, name")
+    .order("name")
+    .then(({ data }: { data: Category[] | null }) => {
+      if (data) setCategories(data);
+    })
+    .catch(console.error);
+}, [supabase]);
 
   /* ================= IMAGE ================= */
 
   function handleImage(file?: File) {
     if (!file) return;
-
     if (imagePreview) URL.revokeObjectURL(imagePreview);
-
     setImageFile(file);
     setImagePreview(URL.createObjectURL(file));
   }
@@ -164,17 +179,16 @@ export default function ServiceForm({
     } else {
       showToast(
         mode === "create"
-            ? "Servicio creado correctamente"
-            : "Cambios guardados correctamente",
+          ? "Servicio creado correctamente"
+          : "Cambios guardados correctamente",
         "success"
-        );
+      );
 
-        setImageFile(null);
+      setImageFile(null);
 
-        /* regresar después de mostrar el toast */
-        setTimeout(() => {
+      setTimeout(() => {
         router.back();
-        }, 1200);
+      }, 1200);
     }
   }
 
@@ -210,8 +224,6 @@ export default function ServiceForm({
         <div className="admin-form-panel">
 
           <header className="admin-form-header">
-
-            {/* BACK BUTTON */}
             <button
               type="button"
               className="admin-back-btn"
@@ -227,82 +239,86 @@ export default function ServiceForm({
             <p className="admin-form-subtitle">
               Información visible en el sitio web.
             </p>
-
           </header>
 
           <form onSubmit={handleSubmit} className="admin-form-grid">
 
             <div className="form-grid">
-            {/* LEFT SIDE */}
-            <div className="form-stack">
-            <div className="form-left">
-              <section>
-                <label className="admin-label">Nombre del servicio</label>
-                <input
-                  className="admin-input admin-input-lg"
-                  value={form.title}
-                  onChange={(e) =>
-                    setForm({ ...form, title: e.target.value })
-                  }
-                  placeholder="Ej. Masaje relajante premium"
-                />
-              </section><br></br>
-
-              <section>
-                <label className="admin-label">Descripción</label>
-                <textarea
-                  rows={4}
-                  className="admin-input"
-                  value={form.description}
-                  onChange={(e) =>
-                    setForm({ ...form, description: e.target.value })
-                  }
-                  placeholder="Describe el tratamiento, beneficios y duración"
-                />
-              </section>
-            </div>
-            </div>
-
-            {/* RIGHT SIDE */}
-            <div className="form-right">
-              <section>
-                <label className="admin-label">Imagen del servicio</label>
-                <div
-                  className="admin-image-drop"
-                  onClick={() =>
-                    document.getElementById("imageInput")?.click()
-                  }
-                  onDragOver={(e) => e.preventDefault()}
-                  onDrop={(e) => {
-                    e.preventDefault();
-                    handleImage(e.dataTransfer.files[0]);
-                  }}
-                >
-                  {imagePreview ? (
-                    <img
-                      src={imagePreview}
-                      className="admin-image-preview"
+              {/* LEFT SIDE */}
+              <div className="form-stack">
+                <div className="form-left">
+                  <section>
+                    <label className="admin-label">Nombre del servicio</label>
+                    <input
+                      className="admin-input admin-input-lg"
+                      value={form.title}
+                      onChange={(e) =>
+                        setForm({ ...form, title: e.target.value })
+                      }
+                      placeholder="Ej. Masaje relajante premium"
                     />
-                  ) : (
-                    <div className="admin-image-placeholder">
-                      <strong>Arrastra una imagen aquí</strong>
-                      <span>o haz clic para seleccionar</span>
-                    </div>
-                  )}
+                  </section><br />
 
-                  <input
-                    id="imageInput"
-                    type="file"
-                    hidden
-                    accept="image/*"
-                    onChange={(e) =>
-                      e.target.files && handleImage(e.target.files[0])
-                    }
-                  />
+                  <section>
+                    <label className="admin-label">Descripción</label>
+                    <textarea
+                      rows={4}
+                      className="admin-input"
+                      value={form.description}
+                      onChange={(e) =>
+                        setForm({ ...form, description: e.target.value })
+                      }
+                      placeholder="Describe el tratamiento, beneficios y duración"
+                    />
+                  </section>
                 </div>
-              </section>
+              </div>
+
+              {/* RIGHT SIDE */}
+              <div className="form-right">
+                <section>
+                  <label className="admin-label">Imagen del servicio</label>
+                  <div
+                    className="admin-image-drop"
+                    onClick={() =>
+                      document.getElementById("imageInput")?.click()
+                    }
+                    onDragOver={(e) => e.preventDefault()}
+                    onDrop={(e) => {
+                      e.preventDefault();
+                      handleImage(e.dataTransfer.files[0]);
+                    }}
+                  >
+                    {imagePreview ? (
+                      <Image
+                        src={imagePreview}
+                        alt="Vista previa del servicio"
+                        width={400}
+                        height={300}
+                        className="admin-image-preview"
+                        style={{ objectFit: "cover" }}
+                        unoptimized
+                      />
+                    ) : (
+                      <div className="admin-image-placeholder">
+                        <strong>Arrastra una imagen aquí</strong>
+                        <span>o haz clic para seleccionar</span>
+                      </div>
+                    )}
+
+                    <input
+                      id="imageInput"
+                      type="file"
+                      hidden
+                      accept="image/*"
+                      onChange={(e) =>
+                        e.target.files && handleImage(e.target.files[0])
+                      }
+                    />
+                  </div>
+                </section>
+              </div>
             </div>
-          </div>
 
             {/* PRICE */}
             <section className="admin-col-6">
@@ -343,10 +359,7 @@ export default function ServiceForm({
                 type="checkbox"
                 checked={form.is_active}
                 onChange={(e) =>
-                  setForm({
-                    ...form,
-                    is_active: e.target.checked,
-                  })
+                  setForm({ ...form, is_active: e.target.checked })
                 }
               />
               <span>Servicio activo</span>
