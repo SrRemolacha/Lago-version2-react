@@ -2,6 +2,7 @@
 
 import { createSupabaseBrowserClient } from '@/lib/supabaseClient';
 import { useAuth } from '@/context/AuthContext';
+import styles from './AdminUsers.module.css';
 
 type Profile = {
   id: string;
@@ -73,6 +74,10 @@ export default function UserActions({
       return;
     }
 
+    if (!confirm('¿Estás seguro de que deseas eliminar este administrador?')) {
+      return;
+    }
+
     const { error } = await supabase
       .from('profiles')
       .update({
@@ -90,19 +95,23 @@ export default function UserActions({
   }
 
   return (
-    <div className="d-flex gap-2">
+    <div className="d-flex align-items-center">
       <button
-        className="btn btn-sm btn-warning"
+        className={`${styles.actionBtn} ${user.is_active ? styles.actionBtnWarning : styles.actionBtnSuccess}`}
         onClick={toggleActive}
+        title={user.is_active ? 'Desactivar usuario' : 'Activar usuario'}
+        disabled={!!user.deleted_at}
       >
-        {user.is_active ? 'Inactivar' : 'Activar'}
+        <i className={`bi ${user.is_active ? 'bi-person-down' : 'bi-person-up'}`}></i>
       </button>
 
       <button
-        className="btn btn-sm btn-danger"
+        className={`${styles.actionBtn} ${styles.actionBtnDanger}`}
         onClick={softDelete}
+        title="Eliminar usuario"
+        disabled={!!user.deleted_at}
       >
-        Eliminar
+        <i className="bi bi-trash3"></i>
       </button>
     </div>
   );

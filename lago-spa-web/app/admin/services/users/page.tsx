@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { createSupabaseBrowserClient } from '@/lib/supabaseClient';
 import UsersTable from '@/components/admin/users/UsersTable';
+import styles from '@/components/admin/users/AdminUsers.module.css';
 
 type Profile = {
   id: string;
@@ -18,7 +19,7 @@ export default function AdminUsersPage() {
   const [users, setUsers] = useState<Profile[]>([]);
   const [loading, setLoading] = useState(true);
 
-  async function fetchUsers() {
+  const fetchUsers = useCallback(async () => {
     setLoading(true);
 
     const { data, error } = await supabase
@@ -33,23 +34,27 @@ export default function AdminUsersPage() {
       return;
     }
 
-    setUsers(data || []);
+    setUsers(data as Profile[] || []);
     setLoading(false);
-  }
+  }, [supabase]);
 
   useEffect(() => {
     fetchUsers();
-  }, []);
+  }, [fetchUsers]);
 
   return (
-    <div className="container py-4">
-      <h1 className="mb-4">Gestión de Administradores</h1>
+    <div className="container py-4 luxuryFade" style={{ animation: 'luxuryFade 0.6s ease forwards' }}>
+      <div className={styles.pageHeader}>
+        <h1 className="m-0 fs-3">Gestión de Administradores</h1>
+      </div>
 
-      <UsersTable
-        users={users}
-        loading={loading}
-        refresh={fetchUsers}
-      />
+      <div className={styles.premiumCard}>
+        <UsersTable
+          users={users}
+          loading={loading}
+          refresh={fetchUsers}
+        />
+      </div>
     </div>
   );
 }

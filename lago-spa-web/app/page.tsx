@@ -1,8 +1,6 @@
 'use client';
 
-
 import Link from 'next/link';
-
 
 export default function HomePage() {
 return (
@@ -22,52 +20,49 @@ Un espacio diseñado para el equilibrio, la calma y el cuidado integral del cuer
 </div>
 </section>
 
-
 {/* SERVICIOS */}
 <section className="services-section container py-5">
-<div className="text-center mb-5">
-<h3 className="section-title">Nuestros servicios</h3>
-<p className="section-subtitle">
-Tratamientos especializados pensados para tu bienestar
-</p>
-</div>
-
-
-<div className="row g-4">
-  <div className="col-12 col-md-6 col-lg-3">
-    <a className="main-card facial" href="/servicios/facial">
-      <div className="main-card-overlay">
-        <h3>Facial</h3>
-      </div>
-    </a>
+  <div className="text-center mb-5">
+    <h3 className="section-title">Nuestros servicios</h3>
+    <p className="section-subtitle">
+      Tratamientos especializados pensados para tu bienestar
+    </p>
   </div>
 
-  <div className="col-12 col-md-6 col-lg-3">
-    <a className="main-card corporal" href="/servicios/corporal">
-      <div className="main-card-overlay">
-        <h3>Corporal</h3>
-      </div>
-    </a>
-  </div>
+  <div className="row g-4">
+    <div className="col-12 col-md-6 col-lg-3">
+      <Link href="/servicios/facial" className="main-card facial">
+        <div className="main-card-overlay">
+          <h3>Facial</h3>
+        </div>
+      </Link>
+    </div>
 
-  <div className="col-12 col-md-6 col-lg-3">
-    <a className="main-card salud" href="/servicios/salud">
-      <div className="main-card-overlay">
-        <h3>Salud</h3>
-      </div>
-    </a>
-  </div>
+    <div className="col-12 col-md-6 col-lg-3">
+      <Link href="/servicios/corporal" className="main-card corporal">
+        <div className="main-card-overlay">
+          <h3>Corporal</h3>
+        </div>
+      </Link>
+    </div>
 
-  <div className="col-12 col-md-6 col-lg-3">
-    <a className="main-card spa" href="/servicios/spa">
-      <div className="main-card-overlay">
-        <h3>Spa</h3>
-      </div>
-    </a>
+    <div className="col-12 col-md-6 col-lg-3">
+      <Link href="/servicios/salud" className="main-card salud">
+        <div className="main-card-overlay">
+          <h3>Salud</h3>
+        </div>
+      </Link>
+    </div>
+
+    <div className="col-12 col-md-6 col-lg-3">
+      <Link href="/servicios/spa" className="main-card spa">
+        <div className="main-card-overlay">
+          <h3>Spa</h3>
+        </div>
+      </Link>
+    </div>
   </div>
-</div>
 </section>
-
 
 {/* HORARIOS */}
 <section className="schedule-section text-center py-5">

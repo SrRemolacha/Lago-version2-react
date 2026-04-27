@@ -62,7 +62,8 @@
   height: 2px;
   background-color: var(--accent-gold);
   transition: width 0.3s ease;
-  pointer-events: none; /* evita interferencias */
+  pointer-events: none;
+  /* evita interferencias */
 }
 
 .hover-gold-underline:hover::after {
@@ -141,11 +142,9 @@
    ===================================================== */
 
 .luxury-panel {
-  background: linear-gradient(
-    145deg,
-    rgba(255,255,255,0.95),
-    rgba(245,246,244,0.9)
-  );
+  background: linear-gradient(145deg,
+      rgba(255, 255, 255, 0.95),
+      rgba(245, 246, 244, 0.9));
 
   backdrop-filter: blur(20px);
   border-radius: 18px;
@@ -153,8 +152,8 @@
   border: 1px solid rgba(214, 178, 94, 0.18);
 
   box-shadow:
-    0 25px 60px rgba(0,0,0,0.18),
-    0 0 0 1px rgba(214,178,94,0.05) inset;
+    0 25px 60px rgba(0, 0, 0, 0.18),
+    0 0 0 1px rgba(214, 178, 94, 0.05) inset;
 
   padding: 1rem 0;
   animation: luxuryFade 0.25s ease-out forwards;
@@ -168,17 +167,15 @@
 @media (prefers-color-scheme: dark) {
 
   .luxury-panel {
-    background: linear-gradient(
-      145deg,
-      rgba(16, 28, 38, 0.98),
-      rgba(13, 24, 32, 0.98)
-    );
+    background: linear-gradient(145deg,
+        rgba(16, 28, 38, 0.98),
+        rgba(13, 24, 32, 0.98));
 
     border: 1px solid rgba(155, 183, 201, 0.15);
 
     box-shadow:
       0 35px 70px rgba(0, 0, 0, 0.75),
-      0 0 0 1px rgba(214,178,94,0.06) inset;
+      0 0 0 1px rgba(214, 178, 94, 0.06) inset;
   }
 
   .luxury-item span {
@@ -275,6 +272,7 @@
     opacity: 0;
     transform: translateY(-6px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -286,6 +284,7 @@
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -301,4 +300,3 @@
     transform: translateY(12px);
   }
 }
-

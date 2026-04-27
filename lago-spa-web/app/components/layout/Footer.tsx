@@ -38,22 +38,24 @@ export default function Footer() {
                 href="https://www.facebook.com/profile.php?id=61577780604356"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover-gold-underline d-inline-block"
+                className="hover-gold-underline d-inline-block mb-2"
                 style={{ color: 'var(--brand-blue)', fontSize: '0.9rem' }}
               >
                 <i className="bi bi-facebook me-2"></i>
-                Facebook 
-              </a><br />
+                Facebook
+              </a>
+              <br />
               <a
                 href="https://www.instagram.com/lagospaesteticasalud"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover-gold-underline d-inline-block"
+                className="hover-gold-underline d-inline-block mb-2"
                 style={{ color: 'var(--brand-blue)', fontSize: '0.9rem' }}
               >
                 <i className="bi bi-instagram me-2"></i>
-                Instagram 
-              </a><br />
+                Instagram
+              </a>
+<br />
             </div>
 
           {/* Contacto */}

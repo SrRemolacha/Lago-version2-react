@@ -16,6 +16,12 @@ type ServiceCardProps = {
   onSelect: (service: Service) => void
 }
 
+const ArrowIcon = () => (
+  <svg className="service-card-arrow" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M5 12h14M12 5l7 7-7 7"/>
+  </svg>
+)
+
 export default function ServiceCard({ service, onSelect }: ServiceCardProps) {
   const isPrivate = service.visibility === 'private'
 
@@ -23,7 +29,7 @@ export default function ServiceCard({ service, onSelect }: ServiceCardProps) {
     <button
       type="button"
       onClick={() => onSelect(service)}
-      className="service-card"
+      className="service-card group"
       aria-label={`Ver detalles de ${service.title}`}
     >
       {/* Imagen */}
@@ -42,6 +48,8 @@ export default function ServiceCard({ service, onSelect }: ServiceCardProps) {
         ) : (
           <div className="service-card-image-placeholder" />
         )}
+
+        <div className="service-card-overlay" />
 
         {isPrivate && (
           <span className="service-card-badge">
@@ -62,12 +70,16 @@ export default function ServiceCard({ service, onSelect }: ServiceCardProps) {
           </p>
         )}
 
-        <div className="service-card-price">
-          {service.price !== null
-            ? `$${service.price.toLocaleString()}`
-            : 'Consulta previa'}
+        <div className="service-card-footer">
+          <div className="service-card-price">
+            {service.price !== null
+              ? `$${service.price.toLocaleString()}`
+              : 'Consulta previa'}
+          </div>
+          <ArrowIcon />
         </div>
       </div>
     </button>
   )
 }
+

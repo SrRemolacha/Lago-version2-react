@@ -1,0 +1,274 @@
+/* ===============================
+   CONTACT – Premium Spa Styles
+   =============================== */
+
+.contact-page {
+  animation: fadeSlideDown 0.6s ease-out;
+  min-height: 100vh;
+}
+
+/* HERO SECTION */
+.contact-hero {
+  text-align: center;
+  padding: 6rem 1.5rem 4rem;
+  background: transparent;
+  position: relative;
+}
+
+.contact-hero-title {
+  font-size: 2.8rem;
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  margin-bottom: 1.2rem;
+  color: var(--text-main);
+  text-transform: uppercase;
+}
+
+.contact-hero-subtitle {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  max-width: 650px;
+  margin: 0 auto;
+  line-height: 1.8;
+  font-weight: 300;
+}
+
+/* CONTENT CONTAINER */
+.contact-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1.5rem 5rem;
+}
+
+@media (min-width: 992px) {
+  .contact-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+}
+
+/* CARD COMMON STYLES */
+.contact-card {
+  background: var(--bg-header); /* Reusing a variable from globals for consistency */
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-soft);
+  border-radius: 20px;
+  padding: 3rem 2.5rem;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.04);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  .contact-card {
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.contact-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.08);
+}
+
+.contact-card-title {
+  font-size: 1.5rem;
+  font-weight: 300;
+  margin-bottom: 0.8rem;
+  color: var(--text-main);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.contact-card-desc {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-bottom: 2.5rem;
+  line-height: 1.7;
+}
+
+/* FORM STYLES */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.contact-form-group {
+  position: relative;
+}
+
+.contact-input {
+  width: 100%;
+  padding: 1.1rem 1.2rem;
+  background: var(--bg-main);
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+  color: var(--text-main);
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.contact-textarea {
+  min-height: 160px;
+  resize: vertical;
+}
+
+.contact-input:focus {
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 0 1px var(--accent-gold);
+}
+
+.contact-input::placeholder {
+  color: var(--text-muted);
+  opacity: 0.6;
+}
+
+.contact-submit {
+  padding: 1.2rem;
+  background-color: var(--brand-blue);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.contact-submit::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--accent-gold);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s ease;
+  z-index: -1;
+}
+
+.contact-submit:hover::before {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.contact-submit:hover {
+  color: #000;
+}
+
+/* INFO STYLES */
+.contact-info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.contact-info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  group: hover;
+  transition: transform 0.3s ease;
+}
+
+.contact-info-item:hover {
+  transform: translateX(5px);
+}
+
+.contact-info-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--accent-gold) 15%, transparent);
+  color: var(--accent-gold);
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.contact-info-item:hover .contact-info-icon {
+  background: var(--accent-gold);
+  color: #fff;
+}
+
+.contact-info-content h4 {
+  font-size: 1rem;
+  font-weight: 400;
+  margin-bottom: 0.4rem;
+  color: var(--text-main);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.contact-info-content p {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.contact-info-content a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.contact-info-content a:hover {
+  color: var(--accent-gold);
+}
+
+/* MAP SECTION */
+.contact-map-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1.5rem 6rem;
+}
+
+.contact-map {
+  width: 100%;
+  height: 450px;
+  border-radius: 20px;
+  border: 1px solid var(--border-soft);
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.4s ease;
+}
+
+.contact-map:hover {
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+}
+
+.contact-map iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  filter: grayscale(0.5); /* Make the map look a bit more elegant and integrated */
+  transition: filter 0.4s ease;
+}
+
+.contact-map:hover iframe {
+  filter: grayscale(0);
+}
+
+@media (prefers-color-scheme: dark) {
+  .contact-map iframe {
+    filter: invert(90%) hue-rotate(180deg);
+  }
+  .contact-map:hover iframe {
+    filter: invert(90%) hue-rotate(180deg) contrast(1.2);
+  }
+}

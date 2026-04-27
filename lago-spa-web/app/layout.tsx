@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   title: "Lago Spa ⋅ Estetica ⋅ Salud",
   description: "Spa, estetica y salud todo lo que tu cuerpo necesita",
   icons: {
-    icon: "\favicon.ico", //esta linea no esta haciendo realmente nada, sigo sin entnder donde se esta implementando realmente el favicon, cualquier cosa basta con poner cualquier archivo que quieras llamandolo favicon.ico en la carpeta app
+    icon: "/favicon.ico", //esta linea no esta haciendo realmente nada, sigo sin entnder donde se esta implementando realmente el favicon, cualquier cosa basta con poner cualquier archivo que quieras llamandolo favicon.ico en la carpeta app
   },
 };
 
@@ -30,15 +30,17 @@ export default function RootLayout({
     <html lang="es">
       <body className="d-flex flex-column min-vh-100">
         <AuthProvider>
+          <div className="app-wrapper d-flex flex-column min-vh-100">
 
-          <Header />
+            <Header />
 
-          <main className="flex-grow-1">
-            {children}
-          </main>
+            <main className="flex-grow-1">
+              {children}
+            </main>
 
-          <Footer />
+            <Footer />
 
+          </div>
         </AuthProvider>
 
         {/* Bootstrap JS – SOLO en cliente */}
