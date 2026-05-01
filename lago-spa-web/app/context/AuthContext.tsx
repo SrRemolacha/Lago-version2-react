@@ -58,22 +58,41 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   );
 
   useEffect(() => {
+    let isMounted = true;
+
     // 1️⃣ Carga inicial — obtener sesión existente
     const initAuth = async () => {
-      const {
-        data: { user: initialUser },
-      } = await supabase.auth.getUser();
+      try {
+        const {
+          data: { user: initialUser },
+          error,
+        } = await supabase.auth.getUser();
 
-      if (initialUser) {
-        const profileData = await fetchProfile(initialUser.id);
-        setUser(initialUser);
-        setProfile(profileData);
-      } else {
-        setUser(null);
-        setProfile(null);
+        if (error) throw error;
+
+        if (initialUser) {
+          const profileData = await fetchProfile(initialUser.id);
+          if (isMounted) {
+            setUser(initialUser);
+            setProfile(profileData);
+          }
+        } else {
+          if (isMounted) {
+            setUser(null);
+            setProfile(null);
+          }
+        }
+      } catch (err) {
+        console.error('[Auth] Error cargando sesión:', err);
+        if (isMounted) {
+          setUser(null);
+          setProfile(null);
+        }
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
       }
-
-      setLoading(false);
     };
 
     initAuth();
@@ -87,27 +106,44 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
         if (sessionUser) {
           const profileData = await fetchProfile(sessionUser.id);
-          setUser(sessionUser);
-          setProfile(profileData);
+          if (isMounted) {
+            setUser(sessionUser);
+            setProfile(profileData);
+            setLoading(false);
+          }
         }
       }
 
       if (event === 'SIGNED_OUT') {
-        setUser(null);
-        setProfile(null);
+        if (isMounted) {
+          setUser(null);
+          setProfile(null);
+          setLoading(false);
+        }
         router.push('/login');
+        router.refresh();
       }
     });
 
     return () => {
+      isMounted = false;
       subscription.unsubscribe();
     };
   }, [supabase, fetchProfile, router]);
 
   const signOut = async () => {
-    await supabase.auth.signOut();
-    // El listener onAuthStateChange captura SIGNED_OUT
-    // y se encarga de limpiar estado + redirigir
+    try {
+      setLoading(true);
+      await supabase.auth.signOut();
+    } catch (error) {
+      console.error('[Auth] Error al cerrar sesión:', error);
+    } finally {
+      setUser(null);
+      setProfile(null);
+      setLoading(false);
+      router.push('/login');
+      router.refresh();
+    }
   };
 
   return (
