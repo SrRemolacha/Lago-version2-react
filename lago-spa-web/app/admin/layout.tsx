@@ -1,6 +1,11 @@
 import { createSupabaseServerClient } from '@/lib/supabaseServer'
 import { redirect } from 'next/navigation'
 
+import '../styles/admin-theme.css'
+import '../styles/admin-forms.css'
+import '../styles/admin-services.css'
+import '../styles/admin-dashboard.css'
+
 export default async function AdminLayout({
   children,
 }: {
@@ -28,7 +33,7 @@ export default async function AdminLayout({
     redirect('/login')
   }
 
-  if (!profile.is_active || profile.deleted_at) {
+  if (profile.is_active === false || profile.deleted_at) {
     redirect('/login')
   }
 
